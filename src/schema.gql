@@ -1,0 +1,83 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""A product in the catalog"""
+input CreateProductDetailInput {
+  """The categoryId of the product"""
+  categoryId: Int!
+
+  """The description of the product"""
+  description: String!
+
+  """The name of the product"""
+  name: String!
+
+  """The sku of the product"""
+  sku: Int!
+}
+
+type Mutation {
+  createProductDetail(createProductDetailInput: CreateProductDetailInput!): ProductDetail!
+  updateProductDetail(updateProductDetailInput: UpdateProductDetailInput!): ProductDetail!
+}
+
+"""A product in the catalog"""
+type ProductCatalogSql {
+  """The categoryId of the product"""
+  categoryId: Int
+
+  """The description of the product"""
+  description: String
+  id: Int
+
+  """The name of the product"""
+  name: String!
+
+  """The price of the product"""
+  price: String
+
+  """The sku of the product"""
+  sku: Int!
+
+  """The stockUnits of the product"""
+  stockUnits: String
+}
+
+"""A product in the catalog"""
+type ProductDetail {
+  """The categoryId of the product"""
+  categoryId: Int!
+
+  """The description of the product"""
+  description: String!
+  id: Int!
+
+  """The name of the product"""
+  name: String!
+
+  """The sku of the product"""
+  sku: Int!
+}
+
+type Query {
+  ProductCatalogSql(id: Int!): ProductCatalogSql!
+  ProductCatalogsSql: [ProductCatalogSql!]!
+  productDetail(id: Int!): ProductDetail!
+  productDetails: [ProductDetail!]!
+}
+
+input UpdateProductDetailInput {
+  """The categoryId of the product"""
+  categoryId: Int
+
+  """The description of the product"""
+  description: String
+  id: Int!
+
+  """The name of the product"""
+  name: String
+
+  """The sku of the product"""
+  sku: Int
+}

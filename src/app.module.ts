@@ -1,12 +1,15 @@
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductDetailsModule } from './product-details/product-details.module';
-import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { join } from 'path';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProductCatalogSqlModule } from './product-catalog-sql/product-catalog-sql.module';
 import { ProductDetail } from './product-details/entities/product-detail.entity';
+import { ProductDetailsModule } from './product-details/product-details.module';
+import { ProductCatalogSql } from './product-catalog-sql/dto/product-catalog-sql.output';
+import { ProductCatalogSql } from './product-catalog-sql/entities/product-catalog-sql.entity';
 
 @Module({
   imports: [
@@ -19,7 +22,7 @@ import { ProductDetail } from './product-details/entities/product-detail.entity'
       password: 'password',
       database: 'postgres',
       synchronize: false,
-      entities: [ProductDetail],
+      entities: [ProductDetail, ProductCatalogSql],
       logging: true,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -28,6 +31,7 @@ import { ProductDetail } from './product-details/entities/product-detail.entity'
       sortSchema: true,
     }),
     ProductDetailsModule,
+    ProductCatalogSqlModule,
   ],
   controllers: [AppController],
   providers: [AppService],
