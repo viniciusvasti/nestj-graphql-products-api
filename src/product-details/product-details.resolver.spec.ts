@@ -28,6 +28,16 @@ const mockProducts: ProductDetail[] = [
   },
 ];
 
+const repositoryStub = {
+  save: jest.fn((product: ProductDetail) =>
+    Promise.resolve({ id: mockProducts.length + 1, ...product }),
+  ),
+  find: jest.fn(() => Promise.resolve(mockProducts)),
+  findOneBy: jest.fn(({ id }: { id: number }) =>
+    Promise.resolve(mockProducts.find((p) => p.id === id)),
+  ),
+};
+
 describe('ProductDetailsResolver', () => {
   let resolver: ProductDetailsResolver;
 
@@ -38,15 +48,7 @@ describe('ProductDetailsResolver', () => {
         ProductDetailsService,
         {
           provide: getRepositoryToken(ProductDetail),
-          useValue: {
-            save: jest.fn((product: ProductDetail) =>
-              Promise.resolve({ id: mockProducts.length + 1, ...product }),
-            ),
-            find: jest.fn(() => Promise.resolve(mockProducts)),
-            findOneBy: jest.fn(({ id }: { id: number }) =>
-              Promise.resolve(mockProducts.find((p) => p.id === id)),
-            ),
-          },
+          useValue: repositoryStub,
         },
       ],
     }).compile();
@@ -73,17 +75,25 @@ describe('ProductDetailsResolver', () => {
       description: 'Description of product 1',
       categoryId: 1,
     });
+    expect(repositoryStub.save).toHaveBeenCalledWith({
+      sku: '9999',
+      name: 'Product 1',
+      description: 'Description of product 1',
+      categoryId: 1,
+    });
   });
 
   it('should return all product details', async () => {
     const products = await resolver.findAll();
 
     expect(products).toEqual(mockProducts);
+    expect(repositoryStub.find).toHaveBeenCalled();
   });
 
   it('should return a single product detail', async () => {
     const product = await resolver.findOne(2);
 
     expect(product).toEqual(mockProducts[1]);
+    expect(repositoryStub.findOneBy).toHaveBeenCalledWith({ id: 2 });
   });
 });
