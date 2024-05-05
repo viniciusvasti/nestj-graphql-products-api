@@ -24,6 +24,9 @@ type Mutation {
 
 """A product in the catalog"""
 type ProductCatalogOrm {
+  """The category of the product"""
+  category: ProductCategory
+
   """The categoryId of the product"""
   categoryId: Int
 
@@ -60,6 +63,11 @@ type ProductCatalogSql {
 
   """The stockUnits of the product"""
   stockUnits: String
+}
+
+type ProductCategory {
+  id: Int!
+  name: String!
 }
 
 """A product in the catalog"""

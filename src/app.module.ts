@@ -13,6 +13,7 @@ import { ProductCatalogOrm } from './product-catalog-orm/entities/product-catalo
 import { ProductCatalogOrmModule } from './product-catalog-orm/product-catalog-orm.module';
 import { ProductPrice } from './product-price/entities/product-price.entity';
 import { ProductInventory } from './product-inventory/entities/product-inventory.entity';
+import { ProductCategory } from './product-category/entities/product-category.entity';
 
 @Module({
   imports: [
@@ -25,7 +26,14 @@ import { ProductInventory } from './product-inventory/entities/product-inventory
       password: 'password',
       database: 'postgres',
       synchronize: false,
-      entities: [ProductDetail, ProductCatalogSql, ProductCatalogOrm, ProductPrice, ProductInventory],
+      entities: [
+        ProductDetail,
+        ProductCatalogSql,
+        ProductCatalogOrm,
+        ProductPrice,
+        ProductInventory,
+        ProductCategory,
+      ],
       logging: true,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({

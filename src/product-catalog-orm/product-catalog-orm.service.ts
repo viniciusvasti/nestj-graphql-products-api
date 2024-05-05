@@ -11,7 +11,9 @@ export class ProductCatalogOrmService {
   ) {}
 
   async findAll(): Promise<ProductCatalogOrm[]> {
-    return await this.repository.find({ relations: ['price', 'inventory'] });
+    return await this.repository.find({
+      relations: ['price', 'inventory', 'category'],
+    });
   }
 
   async findOne(id: number): Promise<ProductCatalogOrm> {
