@@ -23,7 +23,28 @@ type Mutation {
 }
 
 """A product in the catalog"""
-type ProductCatalogOrm {
+type ProductCatalogFieldResolver {
+  """The category of the product"""
+  category: ProductCategory
+
+  """The categoryId of the product"""
+  categoryId: Int
+
+  """The description of the product"""
+  description: String
+  id: Int
+  inventory: ProductInventory
+
+  """The name of the product"""
+  name: String!
+  price: ProductPrice
+
+  """The sku of the product"""
+  sku: String!
+}
+
+"""A product in the catalog"""
+type ProductCatalogRelations {
   """The category of the product"""
   category: ProductCategory
 
@@ -109,12 +130,14 @@ type ProductPrice {
 }
 
 type Query {
-  ProductCatalogOrm(id: Int!): ProductCatalogOrm!
-  ProductCatalogSql(id: Int!): ProductCatalogSql!
-  ProductCatalogsOrm: [ProductCatalogOrm!]!
-  ProductCatalogsSql: [ProductCatalogSql!]!
+  productCatalogFieldResolver(id: Int!): ProductCatalogFieldResolver!
+  productCatalogRelations(id: Int!): ProductCatalogRelations!
+  productCatalogSql(id: Int!): ProductCatalogSql!
   productDetail(id: Int!): ProductDetail!
   productDetails: [ProductDetail!]!
+  productsCatalogFieldResolver: [ProductCatalogFieldResolver!]!
+  productsCatalogRelations: [ProductCatalogRelations!]!
+  productsCatalogsSql: [ProductCatalogSql!]!
 }
 
 input UpdateProductDetailInput {

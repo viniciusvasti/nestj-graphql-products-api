@@ -5,15 +5,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductCatalogSqlModule } from './product-catalog-sql/product-catalog-sql.module';
+import { ProductCatalogSqlModule } from './product-catalog-raw-sql/product-catalog-sql.module';
 import { ProductDetail } from './product-details/entities/product-detail.entity';
 import { ProductDetailsModule } from './product-details/product-details.module';
-import { ProductCatalogSql } from './product-catalog-sql/dto/product-catalog-sql.output';
-import { ProductCatalogOrm } from './product-catalog-orm/entities/product-catalog-orm.entity';
-import { ProductCatalogOrmModule } from './product-catalog-orm/product-catalog-orm.module';
+import { ProductCatalogSql } from './product-catalog-raw-sql/dto/product-catalog-sql.output';
+import { ProductCatalogRelations } from './product-catalog-relations/entities/product-catalog-relations.entity';
+import { ProductCatalogRelationsModule } from './product-catalog-relations/product-catalog-relations.module';
 import { ProductPrice } from './product-price/entities/product-price.entity';
 import { ProductInventory } from './product-inventory/entities/product-inventory.entity';
 import { ProductCategory } from './product-category/entities/product-category.entity';
+import { ProductCatalogFieldResolverModule } from './product-catalog-fields-resolvers/product-catalog-fields-resolvers.module';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { ProductCategory } from './product-category/entities/product-category.en
       entities: [
         ProductDetail,
         ProductCatalogSql,
-        ProductCatalogOrm,
+        ProductCatalogRelations,
         ProductPrice,
         ProductInventory,
         ProductCategory,
@@ -43,7 +44,8 @@ import { ProductCategory } from './product-category/entities/product-category.en
     }),
     ProductDetailsModule,
     ProductCatalogSqlModule,
-    ProductCatalogOrmModule,
+    ProductCatalogRelationsModule,
+    ProductCatalogFieldResolverModule,
   ],
   controllers: [AppController],
   providers: [AppService],

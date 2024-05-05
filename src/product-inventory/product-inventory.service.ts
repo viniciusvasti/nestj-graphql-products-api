@@ -17,4 +17,8 @@ export class ProductInventoryService {
   async findOne(id: number): Promise<ProductInventory> {
     return await this.repository.findOneBy({ id });
   }
+
+  async findBySku(sku: string): Promise<ProductInventory> {
+    return await this.repository.findOneBy({ sku });
+  }
 }

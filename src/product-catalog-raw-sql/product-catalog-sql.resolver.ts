@@ -8,12 +8,12 @@ export class ProductCatalogSqlResolver {
     private readonly ProductCatalogSqlService: ProductCatalogSqlService,
   ) {}
 
-  @Query(() => [ProductCatalogSql], { name: 'ProductCatalogsSql' })
+  @Query(() => [ProductCatalogSql], { name: 'productsCatalogsSql' })
   findAll() {
     return this.ProductCatalogSqlService.findAll();
   }
 
-  @Query(() => ProductCatalogSql, { name: 'ProductCatalogSql' })
+  @Query(() => ProductCatalogSql, { name: 'productCatalogSql' })
   async findOne(@Args('id', { type: () => Int }) id: number) {
     return await this.ProductCatalogSqlService.findOne(id);
   }

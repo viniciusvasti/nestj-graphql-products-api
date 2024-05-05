@@ -17,4 +17,8 @@ export class ProductPricesService {
   async findOne(id: number): Promise<ProductPrice> {
     return await this.repository.findOneBy({ id });
   }
+
+  async findBySku(sku: string): Promise<ProductPrice> {
+    return await this.repository.findOneBy({ sku });
+  }
 }
