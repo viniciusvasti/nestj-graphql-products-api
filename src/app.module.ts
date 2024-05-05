@@ -9,7 +9,10 @@ import { ProductCatalogSqlModule } from './product-catalog-sql/product-catalog-s
 import { ProductDetail } from './product-details/entities/product-detail.entity';
 import { ProductDetailsModule } from './product-details/product-details.module';
 import { ProductCatalogSql } from './product-catalog-sql/dto/product-catalog-sql.output';
-import { ProductCatalogSql } from './product-catalog-sql/entities/product-catalog-sql.entity';
+import { ProductCatalogOrm } from './product-catalog-orm/entities/product-catalog-orm.entity';
+import { ProductCatalogOrmModule } from './product-catalog-orm/product-catalog-orm.module';
+import { ProductPrice } from './product-price/entities/product-price.entity';
+import { ProductInventory } from './product-inventory/entities/product-inventory.entity';
 
 @Module({
   imports: [
@@ -22,7 +25,7 @@ import { ProductCatalogSql } from './product-catalog-sql/entities/product-catalo
       password: 'password',
       database: 'postgres',
       synchronize: false,
-      entities: [ProductDetail, ProductCatalogSql],
+      entities: [ProductDetail, ProductCatalogSql, ProductCatalogOrm, ProductPrice, ProductInventory],
       logging: true,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -32,6 +35,7 @@ import { ProductCatalogSql } from './product-catalog-sql/entities/product-catalo
     }),
     ProductDetailsModule,
     ProductCatalogSqlModule,
+    ProductCatalogOrmModule,
   ],
   controllers: [AppController],
   providers: [AppService],

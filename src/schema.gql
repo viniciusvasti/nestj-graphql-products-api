@@ -23,6 +23,24 @@ type Mutation {
 }
 
 """A product in the catalog"""
+type ProductCatalogOrm {
+  """The categoryId of the product"""
+  categoryId: Int
+
+  """The description of the product"""
+  description: String
+  id: Int
+  inventory: ProductInventory
+
+  """The name of the product"""
+  name: String!
+  price: ProductPrice
+
+  """The sku of the product"""
+  sku: String!
+}
+
+"""A product in the catalog"""
 type ProductCatalogSql {
   """The categoryId of the product"""
   categoryId: Int
@@ -38,7 +56,7 @@ type ProductCatalogSql {
   price: String
 
   """The sku of the product"""
-  sku: Int!
+  sku: String!
 
   """The stockUnits of the product"""
   stockUnits: String
@@ -57,11 +75,35 @@ type ProductDetail {
   name: String!
 
   """The sku of the product"""
-  sku: Int!
+  sku: String!
+}
+
+"""A product in the catalog"""
+type ProductInventory {
+  id: Int!
+
+  """The sku of the product"""
+  sku: String!
+
+  """The name of the product"""
+  stockUnits: Int
+}
+
+"""A product's price"""
+type ProductPrice {
+  id: Int!
+
+  """The name of the product"""
+  price: Float
+
+  """The sku of the product"""
+  sku: String!
 }
 
 type Query {
+  ProductCatalogOrm(id: Int!): ProductCatalogOrm!
   ProductCatalogSql(id: Int!): ProductCatalogSql!
+  ProductCatalogsOrm: [ProductCatalogOrm!]!
   ProductCatalogsSql: [ProductCatalogSql!]!
   productDetail(id: Int!): ProductDetail!
   productDetails: [ProductDetail!]!

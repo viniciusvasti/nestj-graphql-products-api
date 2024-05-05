@@ -12,16 +12,19 @@ export class ProductInventory {
   @PrimaryColumn()
   id: number;
 
-  @Field(() => Int, {
+  @Field(() => String, {
     description: 'The sku of the product',
     nullable: false,
   })
   @Column()
-  sku: number;
+  sku: string
 
-  @Field(() => String, {
+  @Field(() => Int, {
     description: 'The name of the product',
     nullable: true,
+  })
+  @Column({
+    name: 'stockunits',
   })
   stockUnits: number;
 }

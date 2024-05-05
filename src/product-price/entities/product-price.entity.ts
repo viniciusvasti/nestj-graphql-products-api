@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @ObjectType({
@@ -12,16 +12,17 @@ export class ProductPrice {
   @PrimaryColumn()
   id: number;
 
-  @Field(() => Int, {
+  @Field(() => String, {
     description: 'The sku of the product',
     nullable: false,
   })
   @Column()
-  sku: number;
+  sku: string
 
-  @Field(() => String, {
+  @Field(() => Float, {
     description: 'The name of the product',
     nullable: true,
   })
+  @Column()
   price: number;
 }

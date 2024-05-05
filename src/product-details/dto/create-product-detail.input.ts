@@ -8,7 +8,7 @@ export class CreateProductDetailInput {
     description: 'The sku of the product',
     nullable: false,
   })
-  sku: number;
+  sku: string
   @Field(() => String, {
     description: 'The name of the product',
     nullable: false,

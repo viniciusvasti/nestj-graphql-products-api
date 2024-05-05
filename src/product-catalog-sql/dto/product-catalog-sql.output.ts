@@ -7,10 +7,10 @@ export class ProductCatalogSql {
   @Field(() => Int, { nullable: true })
   id: number;
 
-  @Field(() => Int, {
+  @Field(() => String, {
     description: 'The sku of the product',
   })
-  sku: number;
+  sku: string
 
   @Field(() => String, {
     description: 'The name of the product',
