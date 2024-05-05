@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ProductInventory } from './entities/product-inventory.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
+import { ProductInventory } from './entities/product-inventory.entity';
 
 @Injectable()
 export class ProductInventoryService {
@@ -20,5 +20,9 @@ export class ProductInventoryService {
 
   async findBySku(sku: string): Promise<ProductInventory> {
     return await this.repository.findOneBy({ sku });
+  }
+
+  async findAllBySkus(skus: string[]): Promise<ProductInventory[]> {
+    return await this.repository.findBy({ sku: In(skus) });
   }
 }

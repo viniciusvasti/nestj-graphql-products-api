@@ -1,5 +1,6 @@
 import {
   Args,
+  Context,
   Int,
   Parent,
   Query,
@@ -11,6 +12,7 @@ import { ProductDetailsService } from 'src/product-details/product-details.servi
 import { ProductInventoryService } from 'src/product-inventory/product-inventory.service';
 import { ProductPricesService } from 'src/product-price/product-price.service';
 import { ProductCatalogFieldResolver } from './dto/product-catalog-fields-resolvers.output';
+import { IDataLoader } from 'src/dataloader/dataloader.interface';
 
 @Resolver(() => ProductCatalogFieldResolver)
 export class ProductCatalogFieldResolverResolver {
@@ -21,31 +23,44 @@ export class ProductCatalogFieldResolverResolver {
     private readonly productCategoryService: ProductCategoryService,
   ) {}
 
-  @Query(() => [ProductCatalogFieldResolver], { name: 'productsCatalogFieldResolver' })
+  @Query(() => [ProductCatalogFieldResolver], {
+    name: 'productsCatalogFieldResolver',
+  })
   findAll() {
     return this.productDetailsService.findAll();
   }
 
-  @Query(() => ProductCatalogFieldResolver, { name: 'productCatalogFieldResolver' })
+  @Query(() => ProductCatalogFieldResolver, {
+    name: 'productCatalogFieldResolver',
+  })
   async findOne(@Args('id', { type: () => Int }) id: number) {
     return await this.productDetailsService.findOne(id);
   }
 
   @ResolveField()
-  async category(@Parent() productCatalogFieldResolver: ProductCatalogFieldResolver) {
+  async category(
+    @Parent() productCatalogFieldResolver: ProductCatalogFieldResolver,
+    @Context() { loaders }: { loaders: IDataLoader },
+  ) {
     const { categoryId } = productCatalogFieldResolver;
-    return this.productCategoryService.findOne(categoryId);
+    return loaders.categoryLoader.load(categoryId);
   }
 
   @ResolveField()
-  async price(@Parent() productCatalogFieldResolver: ProductCatalogFieldResolver) {
+  async price(
+    @Parent() productCatalogFieldResolver: ProductCatalogFieldResolver,
+    @Context() { loaders }: { loaders: IDataLoader },
+  ) {
     const { sku } = productCatalogFieldResolver;
-    return this.productPriceService.findBySku(sku);
+    return loaders.priceLoader.load(sku);
   }
 
   @ResolveField()
-  async inventory(@Parent() productCatalogFieldResolver: ProductCatalogFieldResolver) {
+  async inventory(
+    @Parent() productCatalogFieldResolver: ProductCatalogFieldResolver,
+    @Context() { loaders }: { loaders: IDataLoader },
+  ) {
     const { sku } = productCatalogFieldResolver;
-    return this.productInventoryService.findBySku(sku);
+    return loaders.priceLoader.load(sku);
   }
 }

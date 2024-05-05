@@ -15,6 +15,8 @@ import { ProductPrice } from './product-price/entities/product-price.entity';
 import { ProductInventory } from './product-inventory/entities/product-inventory.entity';
 import { ProductCategory } from './product-category/entities/product-category.entity';
 import { ProductCatalogFieldResolverModule } from './product-catalog-fields-resolvers/product-catalog-fields-resolvers.module';
+import { DataloaderModule } from './dataloader/dataloader.module';
+import { DataloaderService } from './dataloader/dataloader.service';
 
 @Module({
   imports: [
@@ -37,15 +39,23 @@ import { ProductCatalogFieldResolverModule } from './product-catalog-fields-reso
       ],
       logging: true,
     }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      sortSchema: true,
+      imports: [DataloaderModule],
+      useFactory: (dataloaderService: DataloaderService) => ({
+        autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+        sortSchema: true,
+        context: () => ({
+          loaders: dataloaderService.getLoaders(),
+        }),
+      }),
+      inject: [DataloaderService],
     }),
     ProductDetailsModule,
     ProductCatalogSqlModule,
     ProductCatalogRelationsModule,
     ProductCatalogFieldResolverModule,
+    DataloaderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
