@@ -1,7 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { ProductCategory } from 'src/product-category/entities/product-category.entity';
-import { ProductInventory } from 'src/product-inventory/entities/product-inventory.entity';
-import { ProductPrice } from 'src/product-price/entities/product-price.entity';
+import { ProductCategory } from '../../product-category/entities/product-category.entity';
+import { ProductInventory } from '../../product-inventory/entities/product-inventory.entity';
+import { ProductPrice } from '../../product-price/entities/product-price.entity';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 
 @ObjectType({

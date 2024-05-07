@@ -7,8 +7,8 @@ import {
     ResolveField,
     Resolver,
 } from '@nestjs/graphql';
-import { IDataLoader } from 'src/dataloader/dataloader.interface';
-import { ProductDetailsService } from 'src/product-details/product-details.service';
+import { IDataLoader } from '../dataloader/dataloader.interface';
+import { ProductDetailsService } from '../product-details/product-details.service';
 import { ProductCatalogFieldResolver } from './dto/product-catalog-fields-resolvers.output';
 
 @Resolver(() => ProductCatalogFieldResolver)
@@ -55,6 +55,6 @@ export class ProductCatalogFieldResolverResolver {
     @Context() { loaders }: { loaders: IDataLoader },
   ) {
     const { sku } = productCatalogFieldResolver;
-    return loaders.priceLoader.load(sku);
+    return loaders.inventoryLoader.load(sku);
   }
 }

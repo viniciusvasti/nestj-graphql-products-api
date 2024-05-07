@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import * as DataLoader from 'dataloader';
-import { ProductCategory } from 'src/product-category/entities/product-category.entity';
-import { ProductCategoryService } from 'src/product-category/product-category.service';
-import { ProductInventory } from 'src/product-inventory/entities/product-inventory.entity';
-import { ProductPrice } from 'src/product-price/entities/product-price.entity';
+import { ProductCategory } from '../product-category/entities/product-category.entity';
+import { ProductCategoryService } from '../product-category/product-category.service';
+import { ProductInventory } from '../product-inventory/entities/product-inventory.entity';
+import { ProductPrice } from '../product-price/entities/product-price.entity';
 import { IDataLoader } from './dataloader.interface';
-import { ProductInventoryService } from 'src/product-inventory/product-inventory.service';
-import { ProductPricesService } from 'src/product-price/product-price.service';
+import { ProductInventoryService } from '../product-inventory/product-inventory.service';
+import { ProductPricesService } from '../product-price/product-price.service';
 
 @Injectable()
 export class DataloaderService {
